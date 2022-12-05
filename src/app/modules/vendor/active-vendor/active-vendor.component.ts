@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output} from '@angular/core';
+import { SharedService } from 'src/app/shared.service';
+import { VendorModule } from 'src/app/vendor-module';
 
 @Component({
   selector: 'app-active-vendor',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ActiveVendorComponent implements OnInit {
 
-  constructor() { }
+  @Input() public vendorservicechild:VendorModule[]=[]; 
+  @Output() public childEvent = new EventEmitter<VendorModule>();
 
+  //@Output() public childEvent = new EventEmitter();
+  constructor(private ss:SharedService) { }
+
+  selectedVendor?:VendorModule;
+  onSelectDisplay(vendor:VendorModule):void{
+    this.ss.setbothcomponent(vendor);
+    this.childEvent.emit(vendor);
+
+  }
+   /*
+  fireevent(){
+    this.childEvent.emit("Heyyy Janani..Welcome");
+  }*/
   ngOnInit(): void {
   }
-
 }
